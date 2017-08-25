@@ -1,0 +1,7 @@
+[package]
+name = "meealgi"
+version = "0.1.0"
+authors = ["Liam Dawson"]
+
+[dependencies]
+chrono = "~0.4"
