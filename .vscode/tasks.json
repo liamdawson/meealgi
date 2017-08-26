@@ -12,7 +12,10 @@
             "args": [
                 "build"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "problemMatcher": "$rustc"
         },
         {
@@ -31,7 +34,10 @@
             "args": [
                 "test"
             ],
-            "group": "test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
             "problemMatcher": "$rustc"
         },
         {

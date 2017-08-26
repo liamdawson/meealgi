@@ -1,59 +1,104 @@
+//! Various time calculations for astronomical usage.
 extern crate chrono;
 
-use chrono::prelude::*;
+use chrono::prelude::{Timelike, Datelike, NaiveDateTime};
 
-pub fn utc_to_julian_date(date : &DateTime<Utc>) -> f64 {
-    parts_to_julian_date(&date.naive_utc())
-}
-
-pub fn local_to_julian_date(date : &DateTime<Local>) -> f64 {
-    0f64
-}
-
-pub fn fixed_to_julian_date(date : &DateTime<FixedOffset>) -> f64 {
-    0f64
-}
-
-fn decimal_day(time : &chrono::NaiveTime) -> f64 {
-    0f64
-}
-
-fn parts_to_julian_date(time : &chrono::NaiveDateTime) -> f64 {
-    // JD = INT(365.25*(Y+4716))
-    //    + INT(30.6001*(M+1))
-    //    + D + B - 1524.5
-
-    let cal_constant = 0f64;
-
-    let year = match time.month() {
-        1 | 2 => time.year() - 1,
-        _ => time.year()
+/// Convert a `chrono::NaiveDateTime` to a decimal Julian Day
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate meealgi;
+/// # extern crate chrono;
+/// # use chrono::TimeZone;
+/// # fn main() {
+/// let now = chrono::Utc.ymd(2017,01,01).and_hms(00, 00, 00);
+/// meealgi::time::ndt_to_jul(&now.naive_utc());
+/// # }
+/// ```
+pub fn ndt_to_jul(date : &NaiveDateTime) -> f64 {
+    let year = match date.month() {
+        1 | 2 => date.year() - 1,
+        _ => date.year()
     } as f64;
 
-    let month = match time.month() {
-        1 | 2 => time.month() + 12,
-        _ => time.month()
+    let month = match date.month() {
+        1 | 2 => date.month() + 12,
+        _ => date.month()
     } as f64;
 
-    (365.25_f64 * (year + 4716_f64)).floor()
+    let pre_shift_val = (365.25_f64 * (year + 4716_f64)).floor()
     + (30.6001_f64 * (month + 1f64)).floor()
-    + decimal_day(&time.time()) + cal_constant - 1524.5_f64
+    + decimal_day(&date) - 1524.5_f64;
+
+    let gregorian_shift_factor = match pre_shift_val > 2299160f64 {
+        false => 0f64,
+        true => {
+            let year_factor = (year / 100f64).floor();
+            2f64 - year_factor + (year_factor / 4f64).floor()
+        }
+    };
+
+    pre_shift_val + gregorian_shift_factor
+}
+
+/// Convert a `chrono::NaiveDateTime` to a decimal day
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate meealgi;
+/// # extern crate chrono;
+/// # use chrono::TimeZone;
+/// # fn main() {
+/// let now = chrono::Utc.ymd(2017,01,07).and_hms(12, 00, 00);
+/// meealgi::time::decimal_day(&now.naive_utc());
+/// // -> 7.5
+/// # }
+/// ```
+pub fn decimal_day(date : &chrono::NaiveDateTime) -> f64 {
+    const SECONDS_IN_MINUTE : f64 = 60_f64;
+    const SECONDS_IN_HOUR : f64 = 60_f64 * SECONDS_IN_MINUTE;
+    const SECONDS_IN_DAY : f64 = 24_f64 * SECONDS_IN_HOUR;
+
+    date.day() as f64
+    + (date.hour() as f64 * SECONDS_IN_HOUR
+    + date.minute() as f64 * SECONDS_IN_MINUTE
+    + date.second() as f64) / SECONDS_IN_DAY
 }
 
 #[cfg(test)]
 mod tests {
+    use chrono::prelude::*;
     use time::*;
 
     #[test]
     fn handles_utc() {
         struct CheckPair { date : DateTime<Utc>, result : f64 };
 
+        // test data from NREL Solar A.4.1
         let pairs = [
-            CheckPair { date: Utc.ymd(2000, 1, 1).and_hms(12, 0, 0), result: 2451545.0f64 }
+            CheckPair { date: Utc.ymd( 2000, 01, 01).and_hms(12, 00, 00), result: 2451545.0_f64 },
+            CheckPair { date: Utc.ymd( 1999, 01, 01).and_hms(00, 00, 00), result: 2451179.5_f64 },
+            CheckPair { date: Utc.ymd( 1987, 01, 27).and_hms(00, 00, 00), result: 2446822.5_f64 },
+            CheckPair { date: Utc.ymd( 1987, 06, 19).and_hms(12, 00, 00), result: 2446966.0_f64 },
+            CheckPair { date: Utc.ymd( 1988, 01, 27).and_hms(00, 00, 00), result: 2447187.5_f64 },
+            CheckPair { date: Utc.ymd( 1988, 06, 19).and_hms(12, 00, 00), result: 2447332.0_f64 },
+            CheckPair { date: Utc.ymd( 1900, 01, 01).and_hms(00, 00, 00), result: 2415020.5_f64 },
+            CheckPair { date: Utc.ymd( 1600, 01, 01).and_hms(00, 00, 00), result: 2305447.5_f64 },
+            CheckPair { date: Utc.ymd( 1600, 12, 31).and_hms(00, 00, 00), result: 2305812.5_f64 },
+            CheckPair { date: Utc.ymd( 0837, 04, 10).and_hms(07, 12, 00), result: 2026871.8_f64 },
+            CheckPair { date: Utc.ymd(-0123, 12, 31).and_hms(00, 00, 00), result: 1676496.5_f64 },
+            CheckPair { date: Utc.ymd(-0122, 01, 01).and_hms(00, 00, 00), result: 1676497.5_f64 },
+            CheckPair { date: Utc.ymd(-1000, 07, 12).and_hms(12, 00, 00), result: 1356001.0_f64 },
+            // TODO(vendor-issue): chronotope/chrono#180
+            // CheckPair { date: Utc.ymd(-1000, 02, 29).and_hms(00, 00, 00), result: 1355866.5_f64 },
+            CheckPair { date: Utc.ymd(-1001, 08, 17).and_hms(21, 36, 00), result: 1355671.4_f64 },
+            CheckPair { date: Utc.ymd(-4712, 1, 1).and_hms(12, 00, 00), result: 0.0_f64 },
         ];
 
         for pair in pairs.iter() {
-            assert_eq!(utc_to_julian_date(&pair.date), pair.result);
+            assert_eq!(pair.result, ndt_to_jul(&pair.date.naive_utc()));
         }
     }
 }
