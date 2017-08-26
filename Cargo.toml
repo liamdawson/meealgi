@@ -1,7 +1,8 @@
 [package]
 name = "meealgi"
 version = "0.0.1"
-authors = ["Liam Dawson"]
+authors = ["Liam Dawson <liam@liamdawson.me>"]
+license = "Apache-2.0/MIT"
 
 [dependencies]
 chrono = "~0.4"
