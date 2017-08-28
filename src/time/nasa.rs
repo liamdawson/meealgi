@@ -136,6 +136,23 @@ fn delta_t_frac_year(y : f64) -> f64 {
     }
 }
 
+/// Estimates the Julian Ephemeris Day for a given datetime.
+///
+/// # Examples
+///
+/// ```rust
+/// # extern crate chrono;
+/// # extern crate meealgi;
+/// # use chrono::prelude::*;
+/// # use meealgi::time::nasa::*;
+/// # fn main () {
+/// let jule = ndt_to_jule(&chrono::NaiveDate::from_ymd(2017, 08, 29).and_hms(12, 00, 00));
+/// # }
+/// ```
+pub fn ndt_to_jule(ndt : &chrono::NaiveDateTime) -> f64 {
+    ::time::ndt_to_jul(&ndt) + delta_t(&ndt.date()) / 86400_f64
+}
+
 #[cfg(test)]
 mod tests {
     use chrono::prelude::*;
