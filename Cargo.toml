@@ -1,6 +1,6 @@
 [package]
 name = "meealgi"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Liam Dawson <liam@liamdawson.me>"]
 license = "Apache-2.0/MIT"
 description = "A selective implementation of Jean Meeus' astronomical algorithms."
