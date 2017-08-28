@@ -42,9 +42,26 @@ pub fn ndt_to_jul(date : &NaiveDateTime) -> f64 {
     pre_shift_val + gregorian_shift_factor
 }
 
+/// Calculate the Julian century from a Julian Day.
+///
+/// # Examples
+/// ```rust
+/// # extern crate chrono;
+/// # extern crate meealgi;
+/// # use chrono::prelude::*;
+/// # use meealgi::time::*;
+/// # fn main() {
+/// let jd = ndt_to_jul(&chrono::NaiveDate::from_ymd(2017, 08, 29).and_hms(12, 00, 00));
+/// let jc = jul_to_julc(jd);
+/// # }
+/// ```
+pub fn jul_to_julc(jd : f64) -> f64 {
+    (jd - 2451545_f64) / 36525_f64
+}
+
 #[cfg(test)]
 mod tests {
-    use chrono::prelude::*;
+    use chrono::prelude::{TimeZone, Utc, DateTime};
     use time::*;
 
     #[test]
