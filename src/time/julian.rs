@@ -59,6 +59,24 @@ pub fn jul_to_julc(jd : f64) -> f64 {
     (jd - 2451545_f64) / 36525_f64
 }
 
+/// Calculate the Julian millenium from a Julian century
+///
+/// # Examples
+/// ```rust
+/// # extern crate chrono;
+/// # extern crate meealgi;
+/// # use chrono::prelude::*;
+/// # use meealgi::time::*;
+/// # fn main() {
+/// let day = ndt_to_jul(&chrono::NaiveDate::from_ymd(2017, 08, 30).and_hms(12, 00, 00));
+/// let jul_century = jul_to_julc(day);
+/// let jul_mil = julc_to_julm(jul_century);
+/// # }
+/// ```
+pub fn julc_to_julm(jc : f64) -> f64 {
+    jc / 10_f64
+}
+
 #[cfg(test)]
 mod tests {
     use chrono::prelude::{TimeZone, Utc, DateTime};
