@@ -1,35 +1,49 @@
 use ::earth::periodic_terms;
+use ::utils::angles::limit_radians;
 
 /// Calculates the heliocentric longitude, in radians
+///
+/// Obtained from NREL SPA report
 /// TODO: examples
 pub fn heliocentric_longitude(jul_mil_ephemeris : f64) -> f64 {
-    let l0s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L0");
-    let l1s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L1");
-    let l2s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L2");
-    let l3s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L3");
-    let l4s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L4");
-    let l5s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "L5");
+    let mut ls : Vec<Vec<periodic_terms::EarthPeriodicTableRow>>
+        = vec![vec![], vec![], vec![], vec![], vec![], vec![]];
 
-    let l0 = l0s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
-    let l1 = l1s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
-    let l2 = l2s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
-    let l3 = l3s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
-    let l4 = l4s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
-    let l5 = l5s.fold(0_f64, |curr, row| curr + row.a * (row.b + row.c * jul_mil_ephemeris).cos());
+    for row in periodic_terms::EARTH_PERIODIC_TERMS {
+        match row.term {
+            "L0" => ls[0].push(row.clone()),
+            "L1" => ls[1].push(row.clone()),
+            "L2" => ls[2].push(row.clone()),
+            "L3" => ls[3].push(row.clone()),
+            "L4" => ls[4].push(row.clone()),
+            "L5" => ls[5].push(row.clone()),
+            _ => {}
+        }
+    }
 
-    let result = (l0 + l1 * jul_mil_ephemeris
-        + l2 * jul_mil_ephemeris.powi(2)
-        + l3 * jul_mil_ephemeris.powi(3)
-        + l4 * jul_mil_ephemeris.powi(4)
-        + l5 * jul_mil_ephemeris.powi(5)
-        ) / 10_f64.powi(8);
+    let l_vals = (0..6)
+        .map(|i| ls[i].iter()
+            .map(|row| row.a
+                * (row.b + row.c * jul_mil_ephemeris).cos()).sum::<f64>()).collect::<Vec<f64>>();
+
+    println!("{:?}", [l_vals[0], l_vals[1], l_vals[2], l_vals[3], l_vals[4], l_vals[5]]);
+
+    let result = (l_vals[0] + jul_mil_ephemeris * (l_vals[1]
+        + jul_mil_ephemeris * (l_vals[2]
+        + jul_mil_ephemeris * (l_vals[3]
+        + jul_mil_ephemeris * (l_vals[4]
+        + jul_mil_ephemeris * l_vals[5]
+        ))))) / 100000000_f64;
 
     // limit to a single rotation
     // TODO: test for negatives
-    result % (::std::f64::consts::PI * 2_f64)
+    // result % (::std::f64::consts::PI * 2_f64)
+    limit_radians(result)
 }
 
 /// Calculates the heliocentric latitude, in radians
+///
+/// Obtained from NREL SPA report
 /// TODO: examples
 pub fn heliocentric_latitude(jul_mil_ephemeris : f64) -> f64 {
     let b0s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "B0");
@@ -46,8 +60,10 @@ pub fn heliocentric_latitude(jul_mil_ephemeris : f64) -> f64 {
 }
 
 /// Calculates the earth radius vector, in Astronomical Units
+///
+/// Obtained from NREL SPA report
 /// TODO: examples
-pub fn earth_radius_vec(jul_mil_ephemeris : f64) -> f64 {
+pub fn radius_vec(jul_mil_ephemeris : f64) -> f64 {
     let r0s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "R0");
     let r1s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "R1");
     let r2s = periodic_terms::EARTH_PERIODIC_TERMS.iter().filter(|row| row.term == "R2");

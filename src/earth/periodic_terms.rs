@@ -1,5 +1,6 @@
 /// A row from the Earth's Periodic Terms table (from the
 /// NREL SPA document)
+#[derive(Debug, Copy, Clone)]
 pub struct EarthPeriodicTableRow {
     pub term : &'static str,
     pub a : f64,
