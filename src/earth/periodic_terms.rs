@@ -1,18 +1,39 @@
+use num::rational::BigRational;
+
 /// A row from the Earth's Periodic Terms table (from the
 /// NREL SPA document)
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Clone)]
 pub struct EarthPeriodicTableRow {
     pub term : &'static str,
-    pub a : f64,
-    pub b : f64,
-    pub c : f64
+    pub a : BigRational,
+    pub b : BigRational,
+    pub c : BigRational
+}
+
+macro_rules! periodic_term_table {
+    ( $($name : expr, $( $vals : expr ),+);* ) => {
+        &[
+            $($(
+                EarthPeriodicTableRow {
+                    term: $name,
+                    a: BigRational::from_float($vals[0]).unwrap(),
+                    b: BigRational::from_float($vals[1]).unwrap(),
+                    c: BigRational::from_float($vals[2]).unwrap()
+                }
+            ),*),*
+        ]
+    }
 }
 
 /// A collection of Earth's Periodic Terms as per the NREL
 /// SPA document (A.4.2)
-pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = &[
-    EarthPeriodicTableRow { term: "L0", a:    175347046_f64, b:         0_f64, c:          0_f64 },
-    EarthPeriodicTableRow { term: "L0", a:      3341656_f64, b: 4.6692568_f64, c: 6283.07585_f64 },
+pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = periodic_term_table!(
+    "L0",
+        [   175347046_f64,         0_f64,          0_f64],
+        [     3341656_f64, 4.6692568_f64, 6283.07585_f64];
+    "L1",
+        [           0_f64,         0_f64,          0_f64]);
+    /*
     EarthPeriodicTableRow { term: "L0", a:        34894_f64, b:    4.6261_f64, c: 12566.1517_f64 },
     EarthPeriodicTableRow { term: "L0", a:         3497_f64, b:    2.7441_f64, c:  5753.3849_f64 },
     EarthPeriodicTableRow { term: "L0", a:         3418_f64, b:    2.8289_f64, c:     3.5231_f64 },
@@ -207,3 +228,4 @@ pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = &[
     EarthPeriodicTableRow { term: "R3", a:            7_f64, b:      3.92_f64, c:   12566.15_f64 },
     EarthPeriodicTableRow { term: "R4", a:            4_f64, b:      2.56_f64, c:    6283.08_f64 } 
 ];
+*/

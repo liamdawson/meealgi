@@ -7,6 +7,7 @@
 //! * "Astronomical Algorithms, Second Edition" by Jean Meeus
 
 extern crate chrono;
+extern crate num;
 
 pub mod time;
 pub mod earth;
