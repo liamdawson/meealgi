@@ -55,8 +55,6 @@ pub fn heliocentric_longitude(jul_mil_ephemeris: f64) -> f64 {
             100_000_000_f64;
 
     // limit to a single rotation
-    // TODO: test for negatives
-    // result % (::std::f64::consts::PI * 2_f64)
     limit_radians(result)
 }
 
@@ -82,8 +80,7 @@ pub fn heliocentric_latitude(jul_mil_ephemeris: f64) -> f64 {
     let result = (b0 + b1 * jul_mil_ephemeris) / 10_f64.powi(8);
 
     // limit to a single rotation
-    // TODO: test for negatives
-    result % (::std::f64::consts::PI * 2_f64)
+    limit_radians(result)
 }
 
 /// Calculates the earth radius vector, in Astronomical Units
@@ -128,6 +125,5 @@ pub fn radius_vec(jul_mil_ephemeris: f64) -> f64 {
                       r4 * jul_mil_ephemeris.powi(4)) / 10_f64.powi(8);
 
     // limit to a single rotation
-    // TODO: test for negatives
-    result % (::std::f64::consts::PI * 2_f64)
+    limit_radians(result)
 }
