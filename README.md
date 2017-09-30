@@ -3,6 +3,8 @@
 A selective implementation of Jean Meeus' astronomical algorithms,
 and some supporting work.
 
+[Changelog](CHANGELOG.md)
+
 ## Algorithmic Notes
 
 * nasa_delta_t function is sourced from

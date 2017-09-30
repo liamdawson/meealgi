@@ -10,3 +10,10 @@ readme = "README.md"
 
 [dependencies]
 chrono = "~0.4"
+clippy = { version = "*", optional = true }
+
+[dev-dependencies]
+spectral = "0.6.0"
+
+[features]
+default = []
