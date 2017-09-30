@@ -1,3 +1,4 @@
+//! Constants and helpers for calculations involving earth
 mod periodic_terms;
 mod terms;
 

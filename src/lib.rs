@@ -10,6 +10,9 @@
 
 extern crate chrono;
 
+#[cfg(test)]
+#[macro_use] extern crate spectral;
+
 pub mod time;
 pub mod earth;
 pub mod utils;

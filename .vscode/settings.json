@@ -11,5 +11,6 @@
         "**/*.map",
         "**/.next/**",
         "**/target/**"
-    ]
+    ],
+    "rust.cfg_test": true
 }

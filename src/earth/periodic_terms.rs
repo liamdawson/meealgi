@@ -2,11 +2,18 @@
 
 /// A row from the Earth's Periodic Terms table (from the
 /// NREL SPA document)
+/// 
+/// Improved documentation (e.g. for the meaning of these
+/// fields) welcomed
 #[derive(Debug, Copy, Clone)]
 pub struct EarthPeriodicTableRow {
+    /// identifier for the term (e.g. L0)
     pub term : &'static str,
+    /// scaling term
     pub a : f64,
+    /// constant term
     pub b : f64,
+    /// trigonometric term
     pub c : f64
 }
 

@@ -12,8 +12,7 @@ use chrono::{NaiveDateTime, Datelike, Timelike};
 /// # use chrono::TimeZone;
 /// # fn main() {
 /// let now = chrono::Utc.ymd(2017,01,07).and_hms(12, 00, 00);
-/// meealgi::time::decimal_day(&now.naive_utc());
-/// // -> 7.5
+/// assert_eq!(7.5, meealgi::time::decimal_day(&now.naive_utc()));
 /// # }
 /// ```
 pub fn decimal_day(date : &NaiveDateTime) -> f64 {
