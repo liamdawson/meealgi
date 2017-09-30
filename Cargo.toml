@@ -10,4 +10,3 @@ readme = "README.md"
 
 [dependencies]
 chrono = "~0.4"
-num = { version = "~0.1", features = ["num-bigint", "num-rational"] }
