@@ -11,12 +11,12 @@ pub fn heliocentric_longitude(jul_mil_ephemeris : f64) -> f64 {
 
     for row in periodic_terms::EARTH_PERIODIC_TERMS {
         match row.term {
-            "L0" => ls[0].push(row.clone()),
-            "L1" => ls[1].push(row.clone()),
-            "L2" => ls[2].push(row.clone()),
-            "L3" => ls[3].push(row.clone()),
-            "L4" => ls[4].push(row.clone()),
-            "L5" => ls[5].push(row.clone()),
+            "L0" => ls[0].push(*row),
+            "L1" => ls[1].push(*row),
+            "L2" => ls[2].push(*row),
+            "L3" => ls[3].push(*row),
+            "L4" => ls[4].push(*row),
+            "L5" => ls[5].push(*row),
             _ => {}
         }
     }
@@ -33,7 +33,7 @@ pub fn heliocentric_longitude(jul_mil_ephemeris : f64) -> f64 {
         + jul_mil_ephemeris * (l_vals[3]
         + jul_mil_ephemeris * (l_vals[4]
         + jul_mil_ephemeris * l_vals[5]
-        ))))) / 100000000_f64;
+        ))))) / 100_000_000_f64;
 
     // limit to a single rotation
     // TODO: test for negatives

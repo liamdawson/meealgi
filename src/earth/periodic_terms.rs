@@ -1,3 +1,5 @@
+#![allow(unreadable_literal)]
+
 /// A row from the Earth's Periodic Terms table (from the
 /// NREL SPA document)
 #[derive(Debug, Copy, Clone)]
@@ -136,9 +138,12 @@ pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = &[
     EarthPeriodicTableRow { term: "L3", a:            1_f64, b:      4.72_f64, c:       3.52_f64 },
     EarthPeriodicTableRow { term: "L3", a:            1_f64, b:       5.3_f64, c:   18849.23_f64 },
     EarthPeriodicTableRow { term: "L3", a:            1_f64, b:      5.97_f64, c:     242.73_f64 },
+    #[allow(approx_constant)]
     EarthPeriodicTableRow { term: "L4", a:          114_f64, b:     3.142_f64, c:          0_f64 },
+    #[allow(approx_constant)]
     EarthPeriodicTableRow { term: "L4", a:            8_f64, b:      4.13_f64, c:    6283.08_f64 },
     EarthPeriodicTableRow { term: "L4", a:            1_f64, b:      3.84_f64, c:   12566.15_f64 },
+    #[allow(approx_constant)]
     EarthPeriodicTableRow { term: "L5", a:            1_f64, b:      3.14_f64, c:          0_f64 },
     EarthPeriodicTableRow { term: "B0", a:          280_f64, b:     3.199_f64, c:  84334.662_f64 },
     EarthPeriodicTableRow { term: "B0", a:          102_f64, b:     5.422_f64, c:   5507.553_f64 },
@@ -189,6 +194,7 @@ pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = &[
     EarthPeriodicTableRow { term: "R0", a:           26_f64, b:      4.59_f64, c:   10447.39_f64 },
     EarthPeriodicTableRow { term: "R1", a:       103019_f64, b:   1.10749_f64, c: 6283.07585_f64 },
     EarthPeriodicTableRow { term: "R1", a:         1721_f64, b:    1.0644_f64, c: 12566.1517_f64 },
+    #[allow(approx_constant)]
     EarthPeriodicTableRow { term: "R1", a:          702_f64, b:     3.142_f64, c:          0_f64 },
     EarthPeriodicTableRow { term: "R1", a:           32_f64, b:      1.02_f64, c:   18849.23_f64 },
     EarthPeriodicTableRow { term: "R1", a:           31_f64, b:      2.84_f64, c:    5507.55_f64 },
@@ -199,6 +205,7 @@ pub const EARTH_PERIODIC_TERMS : &[EarthPeriodicTableRow] = &[
     EarthPeriodicTableRow { term: "R1", a:            9_f64, b:      0.27_f64, c:    5486.78_f64 },
     EarthPeriodicTableRow { term: "R2", a:         4359_f64, b:    5.7846_f64, c:  6283.0758_f64 },
     EarthPeriodicTableRow { term: "R2", a:          124_f64, b:     5.579_f64, c:  12566.152_f64 },
+    #[allow(approx_constant)]
     EarthPeriodicTableRow { term: "R2", a:           12_f64, b:      3.14_f64, c:          0_f64 },
     EarthPeriodicTableRow { term: "R2", a:            9_f64, b:      3.63_f64, c:   77713.77_f64 },
     EarthPeriodicTableRow { term: "R2", a:            6_f64, b:      1.87_f64, c:    5573.14_f64 },

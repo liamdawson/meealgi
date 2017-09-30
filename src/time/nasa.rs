@@ -20,8 +20,8 @@ use chrono::{NaiveDate, Datelike};
 /// # }
 /// ```
 pub fn delta_t(date : &NaiveDate) -> f64 {
-    delta_t_frac_year(date.year() as f64
-        + (date.month() as f64 - 0.5_f64) / 12_f64)
+    delta_t_frac_year(f64::from(date.year())
+        + (f64::from(date.month()) - 0.5_f64) / 12_f64)
 }
 
 fn delta_t_frac_year(y : f64) -> f64 {
@@ -33,103 +33,103 @@ fn delta_t_frac_year(y : f64) -> f64 {
     } else if y < 500_f64 {
         let u = y / 100_f64;
 
-	    10583.6_f64
-        - 1014.41_f64 * u
-        + 33.78311_f64 * u.powi(2)
-        - 5.952053_f64 * u.powi(3)
-		- 0.1798452_f64 * u.powi(4)
-        + 0.022174192_f64 * u.powi(5)
-        + 0.0090316521_f64 * u.powi(6)
-    } else if y < 1600_f64 {
-        let u = (y - 1000_f64) / 100_f64;
+	    10_583.6_f64
+        - 1_014.41_f64 * u
+        + 33.783_11_f64 * u.powi(2)
+        - 5.952_053_f64 * u.powi(3)
+		- 0.179_845_2_f64 * u.powi(4)
+        + 0.022_174_192_f64 * u.powi(5)
+        + 0.009_031_652_1_f64 * u.powi(6)
+    } else if y < 1_600_f64 {
+        let u = (y - 1_000_f64) / 100_f64;
 
-	    1574.2_f64
+	    1_574.2_f64
         - 556.01_f64 * u
-        + 71.23472_f64 * u.powi(2)
-        + 0.319781_f64 * u.powi(3)
-		- 0.8503463_f64 * u.powi(4)
-        - 0.005050998_f64 * u.powi(5)
-        + 0.0083572073_f64 * u.powi(6)
-    } else if y < 1700_f64 {
-        let u = y - 1600_f64;
+        + 71.234_72_f64 * u.powi(2)
+        + 0.319_781_f64 * u.powi(3)
+		- 0.850_346_3_f64 * u.powi(4)
+        - 0.005_050_998_f64 * u.powi(5)
+        + 0.008_357_207_3_f64 * u.powi(6)
+    } else if y < 1_700_f64 {
+        let u = y - 1_600_f64;
 
 	    120_f64
-        - 0.9808_f64 * u
-        - 0.01532_f64 * u.powi(2)
-        + u.powi(3) / 7129_f64
-    } else if y < 1800_f64 {
-        let u = y - 1700_f64;
+        - 0.980_8_f64 * u
+        - 0.015_32_f64 * u.powi(2)
+        + u.powi(3) / 7_129_f64
+    } else if y < 1_800_f64 {
+        let u = y - 1_700_f64;
 
         8.83_f64
-        + 0.1603_f64 * u
-        - 0.0059285_f64 * u.powi(2)
-        + 0.00013336_f64 * u.powi(3)
-        - u.powi(4) / 1174000_f64
-    } else if y < 1860_f64 {
-        let u = y - 1800_f64;
+        + 0.160_3_f64 * u
+        - 0.005_928_5_f64 * u.powi(2)
+        + 0.000_133_36_f64 * u.powi(3)
+        - u.powi(4) / 1_174_000_f64
+    } else if y < 1_860_f64 {
+        let u = y - 1_800_f64;
 
         13.72_f64
-        - 0.332447_f64 * u
-        + 0.0068612_f64 * u.powi(2)
-        + 0.0041116_f64 * u.powi(3)
-        - 0.00037436_f64 * u.powi(4)
-        + 0.0000121272_f64 * u.powi(5)
-        - 0.0000001699_f64 * u.powi(6)
-        + 0.000000000875_f64 * u.powi(7)
+        - 0.332_447_f64 * u
+        + 0.006_861_2_f64 * u.powi(2)
+        + 0.004_111_6_f64 * u.powi(3)
+        - 0.000_374_36_f64 * u.powi(4)
+        + 0.000_012_127_2_f64 * u.powi(5)
+        - 0.000_000_169_9_f64 * u.powi(6)
+        + 0.000_000_000_875_f64 * u.powi(7)
     } else if y < 1900_f64 {
         let u = y - 1860_f64;
 
 	    7.62_f64
-        + 0.5737_f64 * u
-        - 0.251754_f64 * u.powi(2)
-        + 0.01680668_f64 * u.powi(3)
-    } else if y < 1920_f64 {
-        let u = y - 1900_f64;
+        + 0.573_7_f64 * u
+        - 0.251_754_f64 * u.powi(2)
+        + 0.016_806_68_f64 * u.powi(3)
+    } else if y < 1_920_f64 {
+        let u = y - 1_900_f64;
 
 	    -2.79_f64
-        + 1.494119_f64 * u
-        - 0.0598939_f64 * u.powi(2)
-        + 0.0061966_f64 * u.powi(3)
-        - 0.000197_f64 * u.powi(4)
-    } else if y < 1941_f64 {
-        let u = y - 1920_f64;
+        + 1.494_119_f64 * u
+        - 0.059_893_9_f64 * u.powi(2)
+        + 0.006_196_6_f64 * u.powi(3)
+        - 0.000_197_f64 * u.powi(4)
+    } else if y < 1_941_f64 {
+        let u = y - 1_920_f64;
 
 	    21.20_f64
-        + 0.84493_f64 * u
-        - 0.076100_f64 * u.powi(2)
-        + 0.0020936_f64 * u.powi(3)
-    } else if y < 1961_f64 {
-        let u = y - 1950_f64;
+        + 0.844_93_f64 * u
+        - 0.076_100_f64 * u.powi(2)
+        + 0.002_093_6_f64 * u.powi(3)
+    } else if y < 1_961_f64 {
+        let u = y - 1_950_f64;
 
 	    29.07_f64
         + 0.407_f64 * u
         - u.powi(2) / 233_f64
-        + u.powi(3) / 2547_f64
-    } else if y < 1986_f64 {
-        let u = y - 1975_f64;
+        + u.powi(3) / 2_547_f64
+    } else if y < 1_986_f64 {
+        let u = y - 1_975_f64;
 
 	    45.45_f64
         + 1.067_f64 * u
         - u.powi(2) / 260_f64
         - u.powi(3) / 718_f64
-    } else if y < 2005_f64 {
-        let u = y - 2000_f64;
+    } else if y < 2_005_f64 {
+        let u = y - 2_000_f64;
 
 	    63.86_f64
         + 0.3345_f64 * u
-        - 0.060374_f64 * u.powi(2)
-        + 0.0017275_f64 * u.powi(3)
-        + 0.000651814_f64 * u.powi(4) 
-        + 0.00002373599_f64 * u.powi(5)
-    } else if y < 2050_f64 {
-        let u = y - 2000_f64;
+        - 0.060_374_f64 * u.powi(2)
+        + 0.001_727_5_f64 * u.powi(3)
+        + 0.000_651_814_f64 * u.powi(4) 
+        + 0.000_023_735_99_f64 * u.powi(5)
+    } else if y < 2_050_f64 {
+        let u = y - 2_000_f64;
         62.92_f64
-        + 0.32217_f64 * u
-        + 0.005589_f64 * u.powi(2)
-    } else if y < 2150_f64 {
+        + 0.322_17_f64 * u
+        + 0.005_589_f64 * u.powi(2)
+    } else if y < 2_150_f64 {
         -20_f64
-        + 32_f64 * ((y - 1820_f64)/100_f64).powi(2)
-        - 0.5628_f64 * (2150_f64 - y)
+        + 32_f64 * ((y - 1_820_f64)/100_f64).powi(2)
+        - 0.562_8_f64 * (2_150_f64 - y)
     } else {
         // handled by first condition
         unreachable!()
@@ -150,12 +150,11 @@ fn delta_t_frac_year(y : f64) -> f64 {
 /// # }
 /// ```
 pub fn ndt_to_jule(ndt : &chrono::NaiveDateTime) -> f64 {
-    ::time::ndt_to_jul(&ndt) + delta_t(&ndt.date()) / 86400_f64
+    ::time::ndt_to_jul(ndt) + delta_t(&ndt.date()) / 86_400_f64
 }
 
 #[cfg(test)]
 mod tests {
-    use chrono::prelude::*;
     use time::nasa::*;
 
     fn within(a : f64, b : f64, epsilon : f64) -> bool {

@@ -21,8 +21,8 @@ pub fn decimal_day(date : &NaiveDateTime) -> f64 {
     const SECONDS_IN_HOUR : f64 = 60_f64 * SECONDS_IN_MINUTE;
     const SECONDS_IN_DAY : f64 = 24_f64 * SECONDS_IN_HOUR;
 
-    date.day() as f64
-    + (date.hour() as f64 * SECONDS_IN_HOUR
-    + date.minute() as f64 * SECONDS_IN_MINUTE
-    + date.second() as f64) / SECONDS_IN_DAY
+    f64::from(date.day())
+    + (f64::from(date.hour()) * SECONDS_IN_HOUR
+    + f64::from(date.minute()) * SECONDS_IN_MINUTE
+    + f64::from(date.second())) / SECONDS_IN_DAY
 }

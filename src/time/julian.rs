@@ -17,26 +17,25 @@ use time::decimal_day;
 /// # }
 /// ```
 pub fn ndt_to_jul(date : &NaiveDateTime) -> f64 {
-    let year = match date.month() {
+    let year = f64::from(match date.month() {
         1 | 2 => date.year() - 1,
         _ => date.year()
-    } as f64;
+    });
 
-    let month = match date.month() {
+    let month = f64::from(match date.month() {
         1 | 2 => date.month() + 12,
         _ => date.month()
-    } as f64;
+    });
 
     let pre_shift_val = (365.25_f64 * (year + 4716_f64)).floor()
     + (30.6001_f64 * (month + 1f64)).floor()
-    + decimal_day(&date) - 1524.5_f64;
+    + decimal_day(date) - 1524.5_f64;
 
-    let gregorian_shift_factor = match pre_shift_val > 2299160f64 {
-        false => 0f64,
-        true => {
-            let year_factor = (year / 100f64).floor();
-            2f64 - year_factor + (year_factor / 4f64).floor()
-        }
+    let gregorian_shift_factor = if pre_shift_val > 2_299_160f64 {
+        let year_factor = (year / 100f64).floor();
+        2f64 - year_factor + (year_factor / 4f64).floor()
+    } else {
+        0f64
     };
 
     pre_shift_val + gregorian_shift_factor
@@ -56,7 +55,7 @@ pub fn ndt_to_jul(date : &NaiveDateTime) -> f64 {
 /// # }
 /// ```
 pub fn jul_to_julc(jd : f64) -> f64 {
-    (jd - 2451545_f64) / 36525_f64
+    (jd - 2_451_545_f64) / 36_525_f64
 }
 
 /// Calculate the Julian millenium from a Julian century
