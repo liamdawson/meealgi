@@ -41,7 +41,8 @@ script:
     if [[ "$TRAVIS_RUST_VERSION" == "nightly" && $CLIPPY ]]; then
       cargo clippy
     fi
-  - cargo rustfmt
+  # TODO: rustfmt
+  # - cargo rustfmt
   - cargo test
 
 after_success:
