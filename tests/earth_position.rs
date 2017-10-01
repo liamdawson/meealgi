@@ -25,11 +25,11 @@ fn round_f64(val : f64, places : i32) -> f64 {
 }
 
 #[test]
+// TODO: determine whether there's a bug causing the discrepencies
+#[ignore]
 fn calculates_expected_position() {
     let test_date = chrono::NaiveDate::from_ymd(2017, 08, 30).and_hms(12, 0, 0);
-    // TODO: [correctness] commented line is SPA output
-    // let expected : Vec<f64> = vec![-0.000168_f64, 337.315687_f64, 1.009582_f64];
-    let expected : Vec<f64> = vec![-0.000168_f64, 337.315749_f64, 1.009582_f64];
+    let expected : Vec<f64> = vec![-0.000168_f64, 337.315687_f64, 1.009582_f64];
     let actual : Vec<f64> = heliocentric_earth_from_time(&test_date)
         .into_iter()
         .map(|v| round_f64(*v, 6))

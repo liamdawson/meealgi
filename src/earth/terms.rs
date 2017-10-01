@@ -1,5 +1,6 @@
 use earth::periodic_terms;
 use utils::angles::limit_radians;
+use std::f64::consts::PI;
 
 /// Calculates the heliocentric longitude, in radians
 ///
@@ -29,18 +30,6 @@ pub fn heliocentric_longitude(jul_mil_ephemeris: f64) -> f64 {
                 .sum::<f64>()
         })
         .collect::<Vec<f64>>();
-
-    println!(
-        "{:?}",
-        [
-            l_vals[0],
-            l_vals[1],
-            l_vals[2],
-            l_vals[3],
-            l_vals[4],
-            l_vals[5],
-        ]
-    );
 
     let result =
         (l_vals[0] +
@@ -126,4 +115,28 @@ pub fn radius_vec(jul_mil_ephemeris: f64) -> f64 {
 
     // limit to a single rotation
     limit_radians(result)
+}
+
+/// Calculates the geocentric longitude, given the heliocentric longitude
+/// # Examples:
+/// ```
+/// use meealgi::earth::{heliocentric_longitude,geocentric_longitude};
+/// fn main() {
+/// assert_eq!(5.557_141_131_125_38_f64, geocentric_longitude(heliocentric_longitude(5_f64)));
+/// }
+/// ```
+pub fn geocentric_longitude(heliocentric_long: f64) -> f64 {
+    limit_radians(heliocentric_long + PI)
+}
+
+/// Calculates the geocentric latitude, given the heliocentric latitude
+/// # Examples:
+/// ```
+/// use meealgi::earth::{heliocentric_latitude,geocentric_latitude};
+/// fn main() {
+/// assert_eq!(-0.000_001_207_500_726_637_073_8f64, geocentric_latitude(heliocentric_latitude(5_f64)));
+/// }
+/// ```
+pub fn geocentric_latitude(heliocentric_lat: f64) -> f64 {
+    -heliocentric_lat
 }
