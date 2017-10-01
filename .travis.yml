@@ -20,6 +20,7 @@ addons:
       - cmake
       - gcc
       - binutils-dev
+      - libiberty-dev
 
 # Add clippy
 before_script:
