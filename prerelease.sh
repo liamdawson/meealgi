@@ -35,7 +35,10 @@ then
   exit 2
 fi
 
-# first, ensure tests pass locally
+# first, run a clippy check
+cargo clippy
+
+# then ensure tests pass locally
 cargo test
 
 # build the changelog

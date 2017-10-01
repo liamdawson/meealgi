@@ -1,4 +1,4 @@
-#![allow(unreadable_literal)]
+#![cfg_attr(feature="cargo-clippy", allow(unreadable_literal,approx_constant))]
 
 /// A row from the Earth's Periodic Terms table (from the
 /// NREL SPA document)
@@ -770,14 +770,12 @@ pub const EARTH_PERIODIC_TERMS: &[EarthPeriodicTableRow] = &[
         b: 5.97_f64,
         c: 242.73_f64,
     },
-    #[allow(approx_constant)]
     EarthPeriodicTableRow {
         term: "L4",
         a: 114_f64,
         b: 3.142_f64,
         c: 0_f64,
     },
-    #[allow(approx_constant)]
     EarthPeriodicTableRow {
         term: "L4",
         a: 8_f64,
@@ -790,7 +788,6 @@ pub const EARTH_PERIODIC_TERMS: &[EarthPeriodicTableRow] = &[
         b: 3.84_f64,
         c: 12566.15_f64,
     },
-    #[allow(approx_constant)]
     EarthPeriodicTableRow {
         term: "L5",
         a: 1_f64,
@@ -1091,7 +1088,6 @@ pub const EARTH_PERIODIC_TERMS: &[EarthPeriodicTableRow] = &[
         b: 1.0644_f64,
         c: 12566.1517_f64,
     },
-    #[allow(approx_constant)]
     EarthPeriodicTableRow {
         term: "R1",
         a: 702_f64,
@@ -1152,7 +1148,6 @@ pub const EARTH_PERIODIC_TERMS: &[EarthPeriodicTableRow] = &[
         b: 5.579_f64,
         c: 12566.152_f64,
     },
-    #[allow(approx_constant)]
     EarthPeriodicTableRow {
         term: "R2",
         a: 12_f64,
