@@ -17,3 +17,7 @@ spectral = "0.6.0"
 
 [features]
 default = []
+
+[badges]
+travis-ci = { repository = "liamdawson/meealgi", branch = "master" }
+codecov = { repository = "liamdawson/meealgi", branch = "master", service = "github" }
