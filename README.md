@@ -3,6 +3,8 @@
 A selective implementation of Jean Meeus' astronomical algorithms,
 and some supporting work.
 
+Note: all functions in **radians** unless otherwise stated.
+
 [Changelog](CHANGELOG.md)
 
 ## Algorithmic Notes
