@@ -31,6 +31,6 @@ fn is_valid_year(year: i32) -> bool {
 
 fn is_valid_date(year: i32, month: u8, day: u8) -> bool {
     is_valid_year(year)
-        && super::ISO8601Date::valid_month_day(&month, &day)
+        && super::ISO8601Date::valid_month_day(month, day)
         && ((month != 2 || day != 29) || StandardCalendar::is_leap_year(year).unwrap())
 }
